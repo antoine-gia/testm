@@ -118,6 +118,10 @@ class AppFixtures extends Fixture
         ];
     }
 
+    /**
+     * This function generate an array of random data used to generate posts through `php bin/console doctrine:fixtures:load`
+     * All this data will be turned into Post objects and saved in database during loadPosts method execution
+     */
     private function getPostData()
     {
         $posts = [];

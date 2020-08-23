@@ -26,6 +26,8 @@ class Category
      * @var string
      *
      * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank(message="Veuillez renseigner le nom")
+     * @Assert\Length(max="20", maxMessage="Le nom ne peut pas dépasser 20 caractères")
      */
     private $name;
 

@@ -85,7 +85,7 @@ class BlogController extends AbstractController
             return $this->render('blog/search.html.twig');
         }
 
-        $query = $request->query->get('s', '');
+        $query = $request->query->get('q', '');
         $limit = $request->query->get('l', 10);
         $foundPosts = $posts->findBySearchQuery($query, $limit);
 

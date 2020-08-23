@@ -15,6 +15,7 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Events;
 use App\Form\CommentType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -47,26 +48,40 @@ class BlogController extends AbstractController
      * Content-Type header for the response.
      * See https://symfony.com/doc/current/quick_tour/the_controller.html#using-formats
      */
-    public function index(Request $request, int $page, string $_format, PostRepository $posts, TagRepository $tags): Response
-    {
+    public function index(
+        Request $request,
+        int $page,
+        string $_format,
+        PostRepository $posts,
+        TagRepository $tags,
+        CategoryRepository $categoryRepository
+    ): Response {
         $tag = null;
+        $category = null;
+
         if ($request->query->has('tag')) {
             $tag = $tags->findOneBy(['name' => $request->query->get('tag')]);
+
         }
-        $latestPosts = $posts->findLatest($page, $tag);
+
+        if ($request->query->has('categoryId')) {
+            $category = $categoryRepository->find($request->query->get('categoryId'));
+        }
+
+        $latestPosts = $posts->findLatest($page, $tag, $category);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
         // See https://symfony.com/doc/current/templating.html#template-suffix
-        return $this->render('blog/index.' . $_format . '.twig', ['posts' => $latestPosts]);
+        return $this->render('blog/index.'.$_format.'.twig', ['posts' => $latestPosts]);
     }
 
     /**
-     * @Route("/search", methods={"GET|POST"}, name="blog_search")
+     * @Route("/search", methods={"POST"}, name="blog_search")
      */
     public function search(Request $request, PostRepository $posts): Response
     {
-        if (!$request->isXmlHttpRequest()) {
+        if ( ! $request->isXmlHttpRequest()) {
             return $this->render('blog/search.html.twig');
         }
 

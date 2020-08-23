@@ -11,10 +11,12 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -64,7 +66,14 @@ class PostType extends AbstractType
                 'label' => 'label.tags',
                 'required' => false,
             ])
-        ;
+            ->add('category', ChoiceType::class, [
+                'label' => 'Catégorie',
+                'required' => false,
+                'choices' => $options['categories'],
+                'choice_label' => function (?Category $category) {
+                    return $category ? $category->getName() : '';
+                },
+            ]);
     }
 
     /**
@@ -74,6 +83,7 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Post::class,
+            'categories' => []
         ]);
     }
 }

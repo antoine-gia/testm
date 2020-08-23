@@ -34,14 +34,6 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Veuillez renseigner la description")
-     */
-    private $description;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
     private $slug;

@@ -19,10 +19,6 @@ class CategoryType extends AbstractType
             ->add('name', null, [
                 'attr' => ['autofocus' => true],
                 'label' => 'Nom',
-            ])
-            ->add('description', TextareaType::class, [
-                'help' => 'Description',
-                'label' => 'label.content',
             ]);
     }
 

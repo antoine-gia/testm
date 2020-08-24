@@ -13,6 +13,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Security\PostVoter;
 use App\Utils\Slugger;
@@ -70,12 +71,15 @@ class BlogController extends AbstractController
      * to constraint the HTTP methods each controller responds to (by default
      * it responds to all methods).
      */
-    function new (Request $request): Response {
+    function new(Request $request, CategoryRepository $categoryRepository): Response
+    {
         $post = new Post();
         $post->setAuthor($this->getUser());
 
         // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
-        $form = $this->createForm(PostType::class, $post)
+        $form = $this->createForm(PostType::class, $post, [
+            'categories' => $categoryRepository->findAll()
+        ])
             ->add('saveAndCreateNew', SubmitType::class);
 
         $form->handleRequest($request);
@@ -132,9 +136,9 @@ class BlogController extends AbstractController
      * @Route("/{id<\d+>}/edit",methods={"GET", "POST"}, name="admin_post_edit")
      * @IsGranted("edit", subject="post", message="Posts can only be edited by their authors.")
      */
-    public function edit(Request $request, Post $post): Response
+    public function edit(Request $request, Post $post, CategoryRepository $categoryRepository): Response
     {
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $post, ['categories' => $categoryRepository->findAll()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -160,7 +164,7 @@ class BlogController extends AbstractController
      */
     public function delete(Request $request, Post $post): Response
     {
-        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+        if ( ! $this->isCsrfTokenValid('delete', $request->request->get('token'))) {
             return $this->redirectToRoute('admin_post_index');
         }
 

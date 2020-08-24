@@ -8,6 +8,12 @@
     <p class="post-metadata">
         <span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|localizeddate('long', 'medium', null, 'UTC') }}</span>
         <span class="metadata"><i class="fa fa-user"></i> {{ post.author.fullName }}</span>
+        {% if post.category %}
+            <span class="metadata">
+                <i class="fa fa-folder"></i>
+                <a style="color: #b4bcc2;" href="{{ path('blog_index', {categoryId: post.category.id}) }}">{{ post.category.name }}</a>
+            </span>
+        {% endif %}
     </p>
 
     <div class="well">
@@ -32,5 +38,5 @@
 
     {{ parent() }}
 
-    
+
 {% endblock %}

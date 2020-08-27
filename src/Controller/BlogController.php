@@ -42,7 +42,7 @@ class BlogController extends AbstractController
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods={"GET"}, name="blog_rss")
      * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods={"GET"}, name="blog_index_paginated")
-     * @Route("/{categorySlug}", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index_by_category")
+     * @Route("/category/{categorySlug}", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index_by_category")
      * @Cache(smaxage="10")
      *
      * NOTE: For standard formats, Symfony will also automatically choose the best
@@ -92,7 +92,7 @@ class BlogController extends AbstractController
             return $this->render('blog/search.html.twig');
         }
 
-        $query = $request->query->get('s', '');
+        $query = $request->query->get('q', '');
         $limit = $request->query->get('l', 10);
         $foundPosts = $posts->findBySearchQuery($query, $limit);
 
@@ -103,6 +103,7 @@ class BlogController extends AbstractController
                 'date' => $post->getPublishedAt()->format('M d, Y'),
                 'author' => htmlspecialchars($post->getAuthor()->getFullName(), ENT_COMPAT | ENT_HTML5),
                 'summary' => $post->getSummary(),
+                'category' => $post->getCategory() ? $post->getCategory()->getName() : null,
                 'url' => $this->generateUrl('blog_post', ['slug' => $post->getSlug()]),
             ];
         }

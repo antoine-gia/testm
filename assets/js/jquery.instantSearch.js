@@ -36,6 +36,7 @@
                     <p class="post-metadata">\
                        <span class="metadata"><i class="fa fa-calendar"></i> {{ date }}</span>\
                        <span class="metadata"><i class="fa fa-user"></i> {{ author }}</span>\
+                       <span class="metadata"><i class="fa fa-folder"></i> {{ category }}</span>\
                     </p>\
                     <p>{{ summary }}</p>\
                 </article>'

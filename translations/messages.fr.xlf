@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="x3_BlYW" resname="menu.category_list">
+        <source>menu.category_list</source>
+        <target state="translated">Liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="tiEQuJ_" resname="title.category_list">
+        <source>title.category_list</source>
+        <target state="translated">Liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="e_MHVnw" resname="category.no_categories_found">
+        <source>category.no_categories_found</source>
+        <target state="translated">Aucune catégorie.</target>
+      </trans-unit>
+      <trans-unit id="CbOQWcY" resname="action.create_category">
+        <source>action.create_category</source>
+        <target state="translated">Ajouter une catégorie</target>
+      </trans-unit>
+      <trans-unit id="eAZob0x" resname="action.delete_category">
+        <source>action.delete_category</source>
+        <target state="translated">Supprimer</target>
+      </trans-unit>
+      <trans-unit id="TXdI4vN" resname="title.edit_category">
+        <source>title.edit_category</source>
+        <target state="translated">Modifier</target>
+      </trans-unit>
+      <trans-unit id="Fyypcjp" resname="action.back_to_category_list">
+        <source>action.back_to_category_list</source>
+        <target state="translated">Retour à la liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="mnP0igp" resname="title.category_new">
+        <source>title.category_new</source>
+        <target state="translated">Nouvelle catégorie</target>
+      </trans-unit>
+      <trans-unit id="QQTBlnE" resname="label.create_category">
+        <source>label.create_category</source>
+        <target state="translated">Ajouter</target>
+      </trans-unit>
+      <trans-unit id="QQTBGnE" resname="label.category.name">
+        <source>label.category.name</source>
+        <target state="translated">Nom</target>
+      </trans-unit>
+      <trans-unit id="QQNBlnE" resname="label.category.description">
+        <source>label.category.description</source>
+        <target state="translated">Description</target>
+      </trans-unit>
+      <trans-unit id="QQNjlnE" resname="category.deleted_successfully">
+        <source>category.deleted_successfully</source>
+        <target state="translated">Catégorie supprimée avec succès</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

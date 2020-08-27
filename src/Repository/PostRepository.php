@@ -11,6 +11,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -36,7 +37,7 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findLatest(int $page = 1, Tag $tag = null): Pagerfanta
+    public function findLatest(int $page = 1, ?Tag $tag = null, ?Category $category = null): Pagerfanta
     {
         $qb = $this->createQueryBuilder('p')
             ->addSelect('a', 't')
@@ -49,6 +50,11 @@ class PostRepository extends ServiceEntityRepository
         if (null !== $tag) {
             $qb->andWhere(':tag MEMBER OF p.tags')
                 ->setParameter('tag', $tag);
+        }
+
+        if (null !== $category) {
+            $qb->andWhere('p.category = :category')
+                ->setParameter('category', $category);
         }
 
         return $this->createPaginator($qb->getQuery(), $page);

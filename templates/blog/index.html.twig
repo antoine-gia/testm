@@ -3,6 +3,15 @@
 {% block body_id 'blog_index' %}
 
 {% block main %}
+    {% if category %}
+        <div style="margin-bottom: 40px;">
+            <h1>{{ category.name }}</h1>
+            <a href="{{ path('blog_index') }}">
+                <span class="metadata"><i class="fa fa-backward"></i> {{ 'action.back_to_list'|trans }}</span>
+            </a>
+        </div>
+    {% endif %}
+
     {% for post in posts %}
         <article class="post">
             <h2>
@@ -14,6 +23,11 @@
             <p class="post-metadata">
                 <span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|localizeddate('long', 'medium', null, 'UTC') }}</span>
                 <span class="metadata"><i class="fa fa-user"></i> {{ post.author.fullName }}</span>
+                {% if post.category %}
+                    <a href="{{ path('blog_index_by_category', {categorySlug: post.category.slug}) }}">
+                        <span class="metadata"><i class="fa fa-folder"></i> {{ post.category.name }}</span>
+                    </a>
+                {% endif %}
             </p>
 
             <p>{{ post.summary }}</p>
@@ -34,6 +48,6 @@
 {% block sidebar %}
     {{ parent() }}
 
-    
+
     {{ include('blog/_rss.html.twig') }}
 {% endblock %}

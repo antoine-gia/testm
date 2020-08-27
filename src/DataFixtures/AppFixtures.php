@@ -11,6 +11,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Tag;
@@ -34,6 +35,7 @@ class AppFixtures extends Fixture
         $this->loadUsers($manager);
         $this->loadTags($manager);
         $this->loadPosts($manager);
+        $this->loadCategories($manager);
     }
 
     private function loadUsers(ObjectManager $manager): void
@@ -91,6 +93,28 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    private function loadCategories(ObjectManager $manager): void
+    {
+        foreach ($this->getCategoriesData() as [$name, $description]) {
+            $category = new Category();
+            $category->setName($name);
+            $category->setSlug(Slugger::slugify($name));
+            $category->setDescription($description);
+
+            $manager->persist($category);
+        }
+
+        $manager->flush();
+    }
+
+    private function getCategoriesData(): array
+    {
+        return [
+            ['Divers', ''],
+            ['Divertissement', ''],
+        ];
     }
 
     private function getUserData(): array

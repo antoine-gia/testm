@@ -15,6 +15,7 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Events;
 use App\Form\CommentType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -41,24 +42,45 @@ class BlogController extends AbstractController
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods={"GET"}, name="blog_rss")
      * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods={"GET"}, name="blog_index_paginated")
+     * @Route("/{categorySlug}", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index_by_category")
      * @Cache(smaxage="10")
      *
      * NOTE: For standard formats, Symfony will also automatically choose the best
      * Content-Type header for the response.
      * See https://symfony.com/doc/current/quick_tour/the_controller.html#using-formats
      */
-    public function index(Request $request, int $page, string $_format, PostRepository $posts, TagRepository $tags): Response
-    {
+    public function index(
+        Request $request,
+        ?string $categorySlug,
+        int $page,
+        string $_format,
+        PostRepository $posts,
+        CategoryRepository $categoryRepository,
+        TagRepository $tags
+    ): Response {
+        // Check category
+        $category = null;
+        if ($categorySlug !== null) {
+            $category = $categoryRepository->findOneBy(['slug' => $categorySlug]);
+            // Wrong cartegory, for now just redirect to main list
+            if ($category === null) {
+                return $this->redirectToRoute('blog_index');
+            }
+        }
+
         $tag = null;
         if ($request->query->has('tag')) {
             $tag = $tags->findOneBy(['name' => $request->query->get('tag')]);
         }
-        $latestPosts = $posts->findLatest($page, $tag);
+        $latestPosts = $posts->findLatest($page, $tag, $category);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
         // See https://symfony.com/doc/current/templating.html#template-suffix
-        return $this->render('blog/index.' . $_format . '.twig', ['posts' => $latestPosts]);
+        return $this->render('blog/index.' . $_format . '.twig', [
+            'posts' => $latestPosts,
+            'category' => $category
+        ]);
     }
 
     /**

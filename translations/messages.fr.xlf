@@ -53,6 +53,10 @@
         <source>category.deleted_successfully</source>
         <target state="translated">Catégorie supprimée avec succès</target>
       </trans-unit>
+      <trans-unit id="VQNjlnE" resname="label.category">
+        <source>label.category</source>
+        <target state="translated">Catégorie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Category
  * @package App\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\EntityListeners({"App\EntityListener\CategoryListener"})
  * @ORM\Table(name="symfony_demo_category")
  */
@@ -41,6 +41,13 @@ class Category
      * @Assert\NotBlank
      */
     private $slug;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text")
+     */
+    private $description;
 
     /**
      * @var \DateTime
@@ -111,5 +118,21 @@ class Category
     public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

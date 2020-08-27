@@ -33,4 +33,6 @@ services:
     App\EventSubscriber\CommentNotificationSubscriber:
         $sender: '%app.notifications.email_sender%'
 
-
+    App\EntityListener\CategoryListener:
+        tags:
+            - { name: doctrine.orm.entity_listener }

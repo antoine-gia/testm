@@ -100,7 +100,7 @@ class CategoryController extends AbstractController
             $category->setSlug(Slugger::slugify($category->getName()));
             $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', 'post.updated_successfully');
+            $this->addFlash('success', 'category.updated_successfully');
 
             return $this->redirectToRoute('admin_category_edit', ['id' => $category->getId()]);
         }

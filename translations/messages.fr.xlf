@@ -57,6 +57,10 @@
         <source>label.category</source>
         <target state="translated">Catégorie</target>
       </trans-unit>
+      <trans-unit id="VQNblnE" resname="category.updated_successfully">
+        <source>category.updated_successfully</source>
+        <target state="translated">Catégorie mise à jour avec succès</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

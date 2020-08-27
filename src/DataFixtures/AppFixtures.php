@@ -142,6 +142,13 @@ class AppFixtures extends Fixture
         ];
     }
 
+    /**
+     * Provide posts fixtures to init database with posts samples
+     * Use methods to generate fake titles, contents and tags
+     *
+     * @return array
+     * @throws \Exception
+     */
     private function getPostData()
     {
         $posts = [];

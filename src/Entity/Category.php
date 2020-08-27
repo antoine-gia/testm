@@ -30,6 +30,10 @@ class Category
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @Assert\Length(
+     *     min = 0,
+     *     max = 20
+     * )
      */
     private $name;
 

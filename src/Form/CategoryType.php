@@ -29,9 +29,12 @@ class CategoryType extends AbstractType
                 'attr' => ['autofocus' => true],
                 'label' => 'label.category.name',
             ])
+            /*
+             * Useless for now, keep it just in case
             ->add('description', TextareaType::class, [
                 'label' => 'label.category.description',
             ])
+            */
         ;
     }
 

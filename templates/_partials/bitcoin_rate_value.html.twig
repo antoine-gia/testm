@@ -1,0 +1,6 @@
+{% if rateValue %}
+    <div style="margin-bottom: 30px;">
+        <h3>Bitcoin 24h</h3>
+        <span style="color:#0f7d68;">{{ rateValue | money_localized_format }}</span>
+    </div>
+{% endif %}

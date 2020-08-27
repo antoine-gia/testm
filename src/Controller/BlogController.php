@@ -103,7 +103,7 @@ class BlogController extends AbstractController
                 'date' => $post->getPublishedAt()->format('M d, Y'),
                 'author' => htmlspecialchars($post->getAuthor()->getFullName(), ENT_COMPAT | ENT_HTML5),
                 'summary' => $post->getSummary(),
-                'category' => $post->getCategory() ? $post->getCategory()->getName() : null,
+                'category' => $post->getCategory() ? $post->getCategory()->getName() : '-',
                 'url' => $this->generateUrl('blog_post', ['slug' => $post->getSlug()]),
             ];
         }

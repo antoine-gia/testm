@@ -1,0 +1,24 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_category_edit' %}
+
+{% block main %}
+    <h1>{{ 'title.edit_category'|trans({'%id%': category.id}) }}</h1>
+
+    {{ include('admin/blog/_form.html.twig', {
+        form: form,
+        button_label: 'action.save'|trans,
+        backlink: {
+            url: path('admin_category_index'),
+            label: 'action.back_to_category_list'|trans
+        }
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        {{ include('admin/blog/category/_delete_form.html.twig', {category: category}, with_context = false) }}
+    </div>
+
+    {{ parent() }}
+{% endblock %}

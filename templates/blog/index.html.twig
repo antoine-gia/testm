@@ -50,4 +50,9 @@
 
 
     {{ include('blog/_rss.html.twig') }}
+
+    {{ render_esi(url('partials_bitcoin_rate_value', {
+        'sharedAge': 600,
+        '_locale': app.request.locale
+    })) }}
 {% endblock %}
